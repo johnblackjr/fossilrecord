@@ -103,7 +103,7 @@
           byGrade.get(r.grade).push(r);
         }
         tbody.replaceChildren();
-        for (let n = 0; n <= 17; n++) {
+        for (let n = 0; n <= 15; n++) {
           const grade = `V${n}`, candidates = byGrade.get(grade) || [];
           const topAge = Math.max(-1, ...candidates.map(r => r.age));
           const holders = candidates.filter(r => r.age === topAge).sort((a,b) => (a.ascentDate || '').localeCompare(b.ascentDate || ''));
