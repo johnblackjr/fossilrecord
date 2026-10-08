@@ -1,1 +1,46 @@
-
+{
+  "demo": true,
+  "lastUpdated": "2026-10-08",
+  "records": [
+    {
+      "grade": "V3",
+      "climber": "Alex Morgan",
+      "age": 74,
+      "boulder": "Example Problem One",
+      "layout": "Spray",
+      "angle": 40,
+      "ascentDate": "2026-08-12",
+      "videoUrl": ""
+    },
+    {
+      "grade": "V5",
+      "climber": "Chris Taylor",
+      "age": 68,
+      "boulder": "Example Problem Two",
+      "layout": "Mirror",
+      "angle": 45,
+      "ascentDate": "2026-09-03",
+      "videoUrl": ""
+    },
+    {
+      "grade": "V5",
+      "climber": "Jordan Lee",
+      "age": 68,
+      "boulder": "Example Problem Three",
+      "layout": "Spray",
+      "angle": 40,
+      "ascentDate": "2026-09-18",
+      "videoUrl": ""
+    },
+    {
+      "grade": "V6",
+      "climber": "Sam Rivera",
+      "age": 63,
+      "boulder": "Example Problem Four",
+      "layout": "Spray",
+      "angle": 40,
+      "ascentDate": "2026-10-01",
+      "videoUrl": ""
+    }
+  ]
+}

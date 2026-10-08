@@ -1,1 +1,122 @@
-
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#172b26">
+  <meta name="description" content="The Fossil Record: celebrating the oldest known ascents on the Tension Board 2.">
+  <title>The Fossil Record — TB2 Age Records</title>
+  <style>
+    :root { color-scheme: light; --ink:#17312a; --muted:#65766f; --paper:#f5f4ef; --line:#dbe2dc; --teal:#1d6654; --accent:#d7e9a3; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--paper); color:var(--ink); font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    a { color:var(--teal); text-underline-offset:3px; }
+    a:hover { color:#113e34; }
+    .wrap { max-width:1140px; margin:auto; padding:0 22px; }
+    header { background:#172b26; color:#fff; overflow:hidden; position:relative; }
+    header::after { content:""; position:absolute; width:370px; height:370px; border:65px solid #2c4b3f; border-radius:50%; top:-185px; right:-95px; opacity:.5; pointer-events:none; }
+    .hero { padding:65px 0 61px; position:relative; z-index:1; }
+    .eyebrow { text-transform:uppercase; letter-spacing:.22em; font-size:.77rem; font-weight:750; color:var(--accent); }
+    h1 { margin:13px 0 10px; font-size:clamp(2.6rem,7vw,5rem); line-height:1; letter-spacing:-.06em; }
+    .subtitle { max-width:640px; font-size:1.13rem; color:#d4e0d8; line-height:1.55; margin:16px 0 0; }
+    main { padding-top:34px !important; padding-bottom:68px !important; }
+    .topline { display:flex; align-items:flex-end; justify-content:space-between; gap:15px; flex-wrap:wrap; margin-bottom:19px; }
+    h2 { font-size:1.6rem; margin:0 0 6px; letter-spacing:-.04em; }
+    .hint,.small { font-size:.88rem; color:var(--muted); }
+    .updated { font-size:.82rem; color:var(--muted); white-space:nowrap; }
+    .notice { padding:13px 16px; margin-bottom:19px; background:#fff5cf; border:1px solid #e1c96a; border-radius:9px; color:#6d520b; }
+    .hidden { display:none !important; }
+    .table-shell { overflow-x:auto; background:#fff; border:1px solid var(--line); border-radius:13px; box-shadow:0 9px 25px #17312a0a; }
+    table { border-collapse:collapse; width:100%; min-width:790px; }
+    thead { background:#eaf0e9; }
+    th { color:#476058; font-size:.73rem; letter-spacing:.09em; text-transform:uppercase; text-align:left; padding:17px 15px; }
+    td { padding:14px 15px; border-top:1px solid #e7ebe6; font-size:.93rem; vertical-align:middle; }
+    tr.empty td { color:#9aa8a0; }
+    tr.empty td:first-child { color:var(--ink); }
+    .grade { display:inline-block; border-radius:7px; background:#dcebd1; font-weight:800; padding:6px 10px; min-width:48px; text-align:center; }
+    .person { font-weight:700; }
+    .age { font-variant-numeric:tabular-nums; font-weight:700; }
+    .climb { font-weight:600; }
+    .setting { color:var(--muted); margin-top:3px; font-size:.79rem; }
+    .date { white-space:nowrap; font-variant-numeric:tabular-nums; }
+    .video { display:inline-flex; align-items:center; gap:5px; font-weight:700; text-decoration:none; }
+    .video:hover { text-decoration:underline; }
+    .joint { display:inline-block; font-size:.69rem; color:#476058; background:#eaf0e9; margin-top:5px; padding:2px 6px; border-radius:5px; }
+    .below { display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:25px; }
+    .panel { background:white; padding:24px; border:1px solid var(--line); border-radius:12px; }
+    .panel h3 { margin:0 0 10px; font-size:1.06rem; }
+    .panel p { margin:0; line-height:1.65; color:#4c6258; font-size:.94rem; }
+    .panel p+p { margin-top:11px; }
+    footer { border-top:1px solid var(--line); padding:25px 0 35px; color:var(--muted); font-size:.85rem; }
+    @media (max-width:670px) { .hero { padding:46px 0 43px; } .below { grid-template-columns:1fr; } .wrap { padding-left:15px; padding-right:15px; } }
+  </style>
+</head>
+<body>
+  <header><div class="wrap hero">
+    <div class="eyebrow">Tension Board 2 · Masters of Gravity</div>
+    <h1>The Fossil Record</h1>
+    <p class="subtitle">Celebrating the oldest known ascents at every V grade. Because strength may fade, but stubbornness is forever.</p>
+  </div></header>
+  <main class="wrap">
+    <div class="topline"><div><h2>The leaderboard</h2><div class="hint">One age record per grade; everyone tied at that age shares the record.</div></div><div id="updated" class="updated"></div></div>
+    <div id="demo" class="notice hidden"><strong>Sample data only.</strong> All climbers and ascents shown below are fictional. Replace the entries in <code>records.json</code> before sharing this site as a real leaderboard.</div>
+    <div id="error" class="notice hidden" role="alert"></div>
+    <div class="table-shell"><table aria-label="TB2 oldest ascents by V grade"><thead><tr><th scope="col">Grade</th><th scope="col">Climber</th><th scope="col">Age</th><th scope="col">Boulder / Setup</th><th scope="col">Ascent date</th><th scope="col">Video</th></tr></thead><tbody id="leaderboard"><tr><td colspan="6">Loading records…</td></tr></tbody></table></div>
+    <div class="below">
+      <section class="panel"><h3>What counts?</h3><p>Classic Tension Board 2 boulders only. Mirror and Spray layouts count equally, as do different board angles. Age is measured in completed years on the ascent date. Climbers of the same record-setting age share the record.</p><p>Submissions follow an honor system: no birth certificate or board-angle verification required. Video evidence is encouraged, but not mandatory.</p></section>
+      <section class="panel"><h3>Know a record?</h3><p>Send the climber's name, age at ascent, boulder name, board layout (Mirror or Spray), angle, ascent date, and a video link if available to the site maintainer.</p><p>Records are reviewed and added manually. This site has no public submission form or user accounts.</p></section>
+    </div>
+  </main>
+  <footer><div class="wrap">The Fossil Record · An independent community project · Not affiliated with Tension Climbing</div></footer>
+  <script>
+    'use strict';
+    const tbody = document.getElementById('leaderboard');
+    const $ = (tag, className, content) => { const el = document.createElement(tag); if (className) el.className = className; if (content !== undefined) el.textContent = content; return el; };
+    const validVideoUrl = value => { try { const url = new URL(value); return ['https:', 'http:'].includes(url.protocol) ? url.href : null; } catch { return null; } };
+    const prettyDate = iso => { if (!/^\d{4}-\d{2}-\d{2}$/.test(iso || '')) return iso || '—'; const date = new Date(iso + 'T12:00:00Z'); return Number.isNaN(date.valueOf()) ? iso : date.toLocaleDateString('en-US', {year:'numeric',month:'short',day:'numeric',timeZone:'UTC'}); };
+    function makeRow(grade, r, joint) {
+      const tr = $('tr', r ? '' : 'empty');
+      const gradeCell = $('td'); gradeCell.append($('span','grade',grade)); tr.append(gradeCell);
+      if (!r) { const cell = $('td','','—'); cell.colSpan = 5; tr.append(cell); return tr; }
+      const nameCell = $('td'); nameCell.append($('div','person',r.climber || 'Unknown')); if (joint) nameCell.append($('div','joint','Joint record')); tr.append(nameCell);
+      tr.append($('td','age',String(r.age)));
+      const boulderCell = $('td'); boulderCell.append($('div','climb',r.boulder || '—'));
+      boulderCell.append($('div','setting',`${r.layout || 'Unknown layout'} @ ${r.angle ?? '?'}°`)); tr.append(boulderCell);
+      tr.append($('td','date',prettyDate(r.ascentDate)));
+      const videoCell = $('td'); const videoUrl = validVideoUrl(r.videoUrl);
+      if (videoUrl) { const link = $('a','video','▶ Watch'); link.href = videoUrl; link.target = '_blank'; link.rel = 'noopener noreferrer'; videoCell.append(link); }
+      else videoCell.textContent = '—';
+      tr.append(videoCell); return tr;
+    }
+    async function init() {
+      try {
+        const response = await fetch('./records.json', {cache:'no-cache'});
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const data = await response.json();
+        if (!Array.isArray(data.records)) throw new Error('Expected a records array.');
+        document.getElementById('demo').classList.toggle('hidden', !data.demo);
+        if (data.lastUpdated) document.getElementById('updated').textContent = `Updated ${prettyDate(data.lastUpdated)}`;
+        const byGrade = new Map();
+        for (const r of data.records) {
+          if (!/^V(?:[0-9]|1[0-7])$/.test(r.grade || '') || !Number.isInteger(r.age) || r.age < 0 || r.age > 130) continue;
+          if (!byGrade.has(r.grade)) byGrade.set(r.grade, []);
+          byGrade.get(r.grade).push(r);
+        }
+        tbody.replaceChildren();
+        for (let n = 0; n <= 17; n++) {
+          const grade = `V${n}`, candidates = byGrade.get(grade) || [];
+          const topAge = Math.max(-1, ...candidates.map(r => r.age));
+          const holders = candidates.filter(r => r.age === topAge).sort((a,b) => (a.ascentDate || '').localeCompare(b.ascentDate || ''));
+          if (!holders.length) tbody.append(makeRow(grade,null,false));
+          else for (const holder of holders) tbody.append(makeRow(grade,holder,holders.length > 1));
+        }
+      } catch (error) {
+        tbody.replaceChildren();
+        const row = $('tr'); const cell = $('td','','Unable to load records.'); cell.colSpan=6; row.append(cell); tbody.append(row);
+        const notice = document.getElementById('error'); notice.textContent = 'Could not load records.json. Ensure it is in the same directory as index.html. If viewing locally, use a web server rather than opening index.html directly. ' + error.message; notice.classList.remove('hidden');
+      }
+    }
+    init();
+  </script>
+</body>
+</html>
