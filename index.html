@@ -53,9 +53,9 @@
 </head>
 <body>
   <header><div class="wrap hero">
-    <div class="eyebrow">Tension Board 2 · Board of Elders</div>
+    <div class="eyebrow">Tension Board 2 · Masters of Gravity</div>
     <h1>The Fossil Record</h1>
-    <p class="subtitle">Celebrating the oldest known ascents at every V grade. Because strength may fade, but pigheadedness is forever.</p>
+    <p class="subtitle">Celebrating the oldest known ascents at every V grade. Because strength may fade, but stubbornness is forever.</p>
   </div></header>
   <main class="wrap">
     <div class="topline"><div><h2>The leaderboard</h2><div class="hint">One age record per grade; everyone tied at that age shares the record.</div></div><div id="updated" class="updated"></div></div>
@@ -64,7 +64,7 @@
     <div class="table-shell"><table aria-label="TB2 oldest ascents by V grade"><thead><tr><th scope="col">Grade</th><th scope="col">Climber</th><th scope="col">Age</th><th scope="col">Boulder / Setup</th><th scope="col">Ascent date</th><th scope="col">Video</th></tr></thead><tbody id="leaderboard"><tr><td colspan="6">Loading records…</td></tr></tbody></table></div>
     <div class="below">
       <section class="panel"><h3>What counts?</h3><p>Classic Tension Board 2 boulders only. Mirror and Spray layouts count equally, as do different board angles. Age is measured in completed years on the ascent date. Climbers of the same record-setting age share the record.</p><p>Submissions follow an honor system: no birth certificate or board-angle verification required. Video evidence is encouraged, but not mandatory.</p></section>
-      <section class="panel"><h3>Know a record?</h3><p>Send the climber's name, age at ascent, boulder name, board layout (Mirror or Spray), angle, ascent date, and a video link if available to the site maintainer.</p><p>Records are reviewed and added manually. This site has no public submission form or user accounts.</p></section>
+      <section class="panel" id="submit"><h3>Submit a Record</h3><p>Think you've set a TB2 age record? Email <a href="mailto:tb2fossilrecords@gmail.com?subject=Fossil%20Record%20submission">tb2fossilrecords@gmail.com</a> with your name, age in completed years at ascent, boulder name and V grade, board layout (Spray or Mirror), angle, and ascent date. Hometown is optional; a link to a video of your send is preferred but not required.</p><p>Classic TB2 boulders only. Submissions are reviewed before publication; records follow the honor system.</p></section>
     </div>
   </main>
   <footer><div class="wrap">The Fossil Record · An independent community project · Not affiliated with Tension Climbing</div></footer>
@@ -103,7 +103,7 @@
           byGrade.get(r.grade).push(r);
         }
         tbody.replaceChildren();
-        for (let n = 0; n <= 15; n++) {
+        for (let n = 0; n <= 17; n++) {
           const grade = `V${n}`, candidates = byGrade.get(grade) || [];
           const topAge = Math.max(-1, ...candidates.map(r => r.age));
           const holders = candidates.filter(r => r.age === topAge).sort((a,b) => (a.ascentDate || '').localeCompare(b.ascentDate || ''));
