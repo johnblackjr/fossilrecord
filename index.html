@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#172b26">
-  <meta name="description" content="The Fossil Record: celebrating the oldest known ascents on the Tension Board 2.">
-  <title>The Fossil Record — TB2 Age Records</title>
+  <meta name="description" content="The TB2 Fossil Record: celebrating the oldest known ascents on the Tension Board 2.">
+  <title>The TB2 Fossil Record — TB2 Age Records</title>
   <style>
     :root { color-scheme: light; --ink:#17312a; --muted:#65766f; --paper:#f5f4ef; --line:#dbe2dc; --teal:#1d6654; --accent:#d7e9a3; }
     * { box-sizing:border-box; }
@@ -53,9 +53,9 @@
 </head>
 <body>
   <header><div class="wrap hero">
-    <div class="eyebrow">Tension Board 2 · Masters of Gravity</div>
+    <div class="eyebrow">Tension Board 2 · Board of Elders</div>
     <h1>The Fossil Record</h1>
-    <p class="subtitle">Celebrating the oldest known ascents at every V grade. Because strength may fade, but stubbornness is forever.</p>
+    <p class="subtitle">Celebrating the oldest known ascents at every V grade. Because strength may fade, but pigheadedness is forever.</p>
   </div></header>
   <main class="wrap">
     <div class="topline"><div><h2>The leaderboard</h2><div class="hint">One age record per grade; everyone tied at that age shares the record.</div></div><div id="updated" class="updated"></div></div>
@@ -103,7 +103,7 @@
           byGrade.get(r.grade).push(r);
         }
         tbody.replaceChildren();
-        for (let n = 0; n <= 17; n++) {
+        for (let n = 0; n <= 14; n++) {
           const grade = `V${n}`, candidates = byGrade.get(grade) || [];
           const topAge = Math.max(-1, ...candidates.map(r => r.age));
           const holders = candidates.filter(r => r.age === topAge).sort((a,b) => (a.ascentDate || '').localeCompare(b.ascentDate || ''));
