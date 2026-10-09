@@ -55,22 +55,38 @@
   <header><div class="wrap hero">
     <div class="eyebrow">Tension Board 2 · Board of Elders</div>
     <h1>The TB2 Fossil Record</h1>
-    <p class="subtitle">Celebrating the oldest known ascents at every V grade. Because strength may fade, but pigheadedness is forever.</p>
+    <p class="subtitle">Celebrating the oldest known ascents at every grade. Because strength may fade, but pigheadedness is forever.</p>
   </div></header>
   <main class="wrap">
-    <div class="topline"><div><h2>The leaderboard</h2><div class="hint">One age record per grade; everyone tied at that age shares the record.</div></div><div id="updated" class="updated"></div></div>
+    <div class="topline"><div><h2>The leaderboard</h2><div class="hint">One age record per French/V-grade pair; everyone tied at that age shares the record.</div></div><div id="updated" class="updated"></div></div>
     <div id="demo" class="notice hidden"><strong>Sample data only.</strong> All climbers and ascents shown below are fictional for testing purposes; I'll add real data soon! </div>
     <div id="error" class="notice hidden" role="alert"></div>
-    <div class="table-shell"><table aria-label="TB2 oldest ascents by V grade"><thead><tr><th scope="col">Grade</th><th scope="col">Climber</th><th scope="col">Age</th><th scope="col">Boulder / Setup</th><th scope="col">Ascent date</th><th scope="col">Video</th></tr></thead><tbody id="leaderboard"><tr><td colspan="6">Loading records…</td></tr></tbody></table></div>
+    <div class="table-shell"><table aria-label="TB2 oldest ascents by French and V grade"><thead><tr><th scope="col">Grade</th><th scope="col">Climber</th><th scope="col">Age</th><th scope="col">Boulder / Setup</th><th scope="col">Ascent date</th><th scope="col">Video</th></tr></thead><tbody id="leaderboard"><tr><td colspan="6">Loading records…</td></tr></tbody></table></div>
     <div class="below">
       <section class="panel"><h3>What counts?</h3><p>Classic Tension Board 2 boulders only. Mirror and Spray layouts count equally, as do different board angles. Age is measured in completed years on the ascent date. Climbers of the same record-setting age share the record.</p><p>Submissions follow an honor system: no birth certificate or board-angle verification required. Video evidence is encouraged, but not mandatory.</p></section>
-      <section class="panel" id="submit"><h3>Submit a Record</h3><p>Think you've set a TB2 age record? Email <a href="mailto:tb2fossilrecords@gmail.com?subject=Fossil%20Record%20submission">tb2fossilrecords@gmail.com</a> with your name, age in completed years at ascent, boulder name and V grade, board layout (Spray or Mirror), angle, and ascent date. A link to a video of your send is preferred but not required.</p><p>Classic TB2 boulders only. Submissions are reviewed before publication; records follow the honor system.</p></section>
+      <section class="panel" id="submit"><h3>Submit a Record</h3><p>Think you've set a TB2 age record? Email <a href="mailto:tb2fossilrecords@gmail.com?subject=Fossil%20Record%20submission">tb2fossilrecords@gmail.com</a> with your name, age in completed years at ascent, boulder name and French/V grade (e.g., 6b+/V4), board layout (Spray or Mirror), angle, and ascent date. A link to a video of your send is preferred but not required.</p><p>Classic TB2 boulders only. Submissions are reviewed before publication; records follow the honor system.</p></section>
     </div>
   </main>
   <footer><div class="wrap">The TB2 Fossil Record · An independent community project · Not affiliated with Tension Climbing</div></footer>
   <script>
     'use strict';
     const tbody = document.getElementById('leaderboard');
+    // Each French/V-grade pair is a separate record category.
+    const gradePairs = [
+      ['4a','V0'], ['4b','V0'], ['4c','V0'],
+      ['5a','V1'], ['5b','V1'], ['5c','V2'],
+      ['6a','V3'], ['6a+','V3'],
+      ['6b','V4'], ['6b+','V4'],
+      ['6c','V5'], ['6c+','V5'],
+      ['7a','V6'], ['7a+','V7'],
+      ['7b','V8'], ['7b+','V8'],
+      ['7c','V9'], ['7c+','V10'],
+      ['8a','V11'], ['8a+','V12'],
+      ['8b','V13'], ['8b+','V14'],
+      ['8c','V15'], ['8c+','V16'], ['9a','V17']
+    ];
+    const gradeLabel = (font, v) => `${font}/${v}`;
+    const gradeKey = r => gradeLabel((r.fontGrade || '').trim().toLowerCase(), r.grade || '');
     const $ = (tag, className, content) => { const el = document.createElement(tag); if (className) el.className = className; if (content !== undefined) el.textContent = content; return el; };
     const validVideoUrl = value => { try { const url = new URL(value); return ['https:', 'http:'].includes(url.protocol) ? url.href : null; } catch { return null; } };
     const prettyDate = iso => { if (!/^\d{4}-\d{2}-\d{2}$/.test(iso || '')) return iso || '—'; const date = new Date(iso + 'T12:00:00Z'); return Number.isNaN(date.valueOf()) ? iso : date.toLocaleDateString('en-US', {year:'numeric',month:'short',day:'numeric',timeZone:'UTC'}); };
@@ -99,12 +115,14 @@
         const byGrade = new Map();
         for (const r of data.records) {
           if (!/^V(?:[0-9]|1[0-7])$/.test(r.grade || '') || !Number.isInteger(r.age) || r.age < 0 || r.age > 130) continue;
-          if (!byGrade.has(r.grade)) byGrade.set(r.grade, []);
-          byGrade.get(r.grade).push(r);
+          const key = gradeKey(r);
+          if (!gradePairs.some(([font, v]) => gradeLabel(font, v) === key)) continue;
+          if (!byGrade.has(key)) byGrade.set(key, []);
+          byGrade.get(key).push(r);
         }
         tbody.replaceChildren();
-        for (let n = 0; n <= 14; n++) {
-          const grade = `V${n}`, candidates = byGrade.get(grade) || [];
+        for (const [font, v] of gradePairs) {
+          const grade = gradeLabel(font, v), candidates = byGrade.get(grade) || [];
           const topAge = Math.max(-1, ...candidates.map(r => r.age));
           const holders = candidates.filter(r => r.age === topAge).sort((a,b) => (a.ascentDate || '').localeCompare(b.ascentDate || ''));
           if (!holders.length) tbody.append(makeRow(grade,null,false));

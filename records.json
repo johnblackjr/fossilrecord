@@ -10,7 +10,8 @@
       "layout": "Spray",
       "angle": 40,
       "ascentDate": "2026-08-12",
-      "videoUrl": ""
+      "videoUrl": "",
+      "fontGrade": "6a"
     },
     {
       "grade": "V5",
@@ -20,7 +21,8 @@
       "layout": "Mirror",
       "angle": 45,
       "ascentDate": "2026-09-03",
-      "videoUrl": ""
+      "videoUrl": "",
+      "fontGrade": "6c"
     },
     {
       "grade": "V5",
@@ -30,7 +32,8 @@
       "layout": "Spray",
       "angle": 40,
       "ascentDate": "2026-09-18",
-      "videoUrl": ""
+      "videoUrl": "",
+      "fontGrade": "6c"
     },
     {
       "grade": "V6",
@@ -40,7 +43,8 @@
       "layout": "Spray",
       "angle": 40,
       "ascentDate": "2026-10-01",
-      "videoUrl": ""
+      "videoUrl": "",
+      "fontGrade": "7a"
     }
   ]
 }
